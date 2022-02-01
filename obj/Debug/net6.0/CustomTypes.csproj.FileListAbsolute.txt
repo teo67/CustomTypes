@@ -1,0 +1,15 @@
+C:\Users\006co\Desktop\Code\CustomTypes\bin\Debug\net6.0\CustomTypes.exe
+C:\Users\006co\Desktop\Code\CustomTypes\bin\Debug\net6.0\CustomTypes.deps.json
+C:\Users\006co\Desktop\Code\CustomTypes\bin\Debug\net6.0\CustomTypes.runtimeconfig.json
+C:\Users\006co\Desktop\Code\CustomTypes\bin\Debug\net6.0\CustomTypes.dll
+C:\Users\006co\Desktop\Code\CustomTypes\bin\Debug\net6.0\ref\CustomTypes.dll
+C:\Users\006co\Desktop\Code\CustomTypes\bin\Debug\net6.0\CustomTypes.pdb
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\CustomTypes.csproj.AssemblyReference.cache
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\CustomTypes.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\CustomTypes.AssemblyInfoInputs.cache
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\CustomTypes.AssemblyInfo.cs
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\CustomTypes.csproj.CoreCompileInputs.cache
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\CustomTypes.dll
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\ref\CustomTypes.dll
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\CustomTypes.pdb
+C:\Users\006co\Desktop\Code\CustomTypes\obj\Debug\net6.0\CustomTypes.genruntimeconfig.cache
