@@ -9,5 +9,12 @@ myMap.Add(1, 5);
 myMap.Add(1, 6);
 myMap.Add(2, 8);
 myMap.Add(2, 9);
-
+myMap.Insert(1, 1, 10);
 Console.WriteLine(myMap);
+Console.WriteLine(myMap.Head.right.down.val);
+Console.WriteLine(myMap.Head.right.right.down.val);
+Console.WriteLine(myMap.Head.down.right.val);
+Console.WriteLine(myMap.Head.down.right.right.val);
+Console.WriteLine(myMap.Head.down.right.down.val);
+Console.WriteLine(myMap.Head.down.right.right.down.val);
+Console.WriteLine(myMap.Head.down.right.right.right.down);

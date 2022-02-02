@@ -148,6 +148,79 @@ namespace NodeMap {
             return saved;
         }
 
+        private void ReplaceBackwards(Node<T> next, Node<T>? setTo) {
+            if(next.right != null) {
+                ReplaceBackwards(next.right, next.down);
+            }
+            next.down = setTo;
+        }
+
+        public Node<T> Insert(int row, int col, T val) {
+            Node<T> adding = new Node<T>(val);
+            if(row == 0 && col == 0) {
+                adding.right = this.Head;
+                if(this.Head != null) {
+                    adding.down = this.Head.down;
+                }
+                this.Head = adding;
+            } else if(row == 0) {
+                Node<T> left = this.Get(0, col - 1);
+                adding.right = left.right;
+                if(left.down != null) {
+                    adding.down = left.down.right;
+                }
+                left.right = adding;
+            } else {
+                Node<T>? above;
+                if(col != 0) {
+                    int colCount = 0;
+                    Node<T> aboveLeft = this.GetFirst(row - 1);
+                    while(aboveLeft.right != null && colCount < col - 1) {
+                        colCount++;
+                        aboveLeft = aboveLeft.right;
+                    }
+                    if(aboveLeft.down == null) {
+                        throw new Exception($"Your column value exceeded the length of row {row}.");
+                    }
+                    if(colCount == col - 1) {
+                        above = aboveLeft.right;
+                        aboveLeft = aboveLeft.down;
+                    } else {
+                        above = null;
+                        aboveLeft = aboveLeft.down;
+                        while(aboveLeft.right != null && colCount < col - 1) {
+                            colCount++;
+                            aboveLeft = aboveLeft.right;
+                        }
+                        if(colCount != col - 1) {
+                            throw new Exception($"Your column value exceeded the length of row {row}.");
+                        }
+                    }
+                    adding.right = aboveLeft.right; // at this point, aboveLeft is just left of adding
+                    if(aboveLeft.down != null) {
+                        adding.down = aboveLeft.down.right;
+                    }
+                    aboveLeft.right = adding;
+                } else {
+                    above = this.GetFirst(row - 1);
+                    if(above.down != null) {
+                        adding.down = above.down.down;
+                    }
+                }
+                if(above != null) {
+                    this.ReplaceBackwards(above, adding);
+                }
+            }
+            // at this point, we've shifted over the row above as well as hooked up the left node to the new one and the new node to the node right of the left node
+            // next, we need to shift the target row's down properties
+            Node<T>? viewing = adding.right;
+            while(viewing != null && viewing.down != null) {
+                viewing.down = viewing.down.right;
+                viewing = viewing.right;
+            }
+            return adding;
+        }
+
         public Node<T> GetFirst(int row) {
             Node<T>? viewing = this.Head;
             int currentRow = 0;
