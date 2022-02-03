@@ -1,0 +1,3 @@
+interface IExample {
+    void Run();
+}

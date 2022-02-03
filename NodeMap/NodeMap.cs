@@ -19,17 +19,7 @@ namespace NodeMap {
 
         public int Size {
             get {
-                int returning = 0;
-                Node<T>? leftmost = this.Head;
-                while(leftmost != null) {
-                    Node<T>? viewing = leftmost;
-                    while(viewing != null) {
-                        returning++;
-                        viewing = viewing.right;
-                    }
-                    leftmost = leftmost.down;
-                }
-                return returning;
+                return this.ThroughEach<int>(0, (Node<T> viewing) => 1, (int current, int adding) => current + adding);
             }
         }
 
@@ -203,6 +193,7 @@ namespace NodeMap {
                     aboveLeft.right = adding;
                 } else {
                     above = this.GetFirst(row - 1);
+                    adding.right = above.down;
                     if(above.down != null) {
                         adding.down = above.down.down;
                     }
@@ -219,6 +210,75 @@ namespace NodeMap {
                 viewing = viewing.right;
             }
             return adding;
+        }
+
+        public Node<T> Delete(int row, int col) {
+            Node<T> deleting;
+            if(row == 0 && col == 0) {
+                if(this.Head == null || this.Head.right == null) {
+                    throw new Exception("Cannot delete such that a row would become empty!");
+                }
+                deleting = this.Head;
+                this.Head = this.Head.right;
+            } else if(row == 0) {
+                Node<T> left = this.Get(0, col - 1);
+                if(left.right == null) {
+                    throw new Exception($"Item ({row}, {col}) does not exist.");
+                }
+                deleting = left.right;
+                left.right = left.right.right;
+            } else {
+                Node<T>? above;
+                if(col != 0) {
+                    int colCount = 0;
+                    Node<T> aboveLeft = this.GetFirst(row - 1);
+                    while(aboveLeft.right != null && colCount < col - 1) {
+                        colCount++;
+                        aboveLeft = aboveLeft.right;
+                    }
+                    if(aboveLeft.down == null) {
+                        throw new Exception($"Your column value exceeded the length of row {row}.");
+                    }
+                    if(colCount == col - 1) {
+                        above = aboveLeft.right;
+                        aboveLeft = aboveLeft.down;
+                    } else {
+                        above = null;
+                        aboveLeft = aboveLeft.down;
+                        while(aboveLeft.right != null && colCount < col - 1) {
+                            colCount++;
+                            aboveLeft = aboveLeft.right;
+                        }
+                        if(colCount != col - 1) {
+                            throw new Exception($"Your column value exceeded the length of row {row}.");
+                        }
+                    }
+                    if(aboveLeft.right == null) {
+                        throw new Exception($"Item ({row}, {col}) does not exist.");
+                    }
+                    deleting = aboveLeft.right;
+                    aboveLeft.right = aboveLeft.right.right;
+                } else {
+                    above = this.GetFirst(row - 1);
+                    if(above.down == null) {
+                        throw new Exception($"Item ({row}, {col}) does not exist.");
+                    }
+                    if(above.down.right == null) {
+                        throw new Exception("Cannot delete such that a row would become empty!");
+                    }
+                    deleting = above.down;
+                }
+                while(above != null && above.down != null) {
+                    above.down = above.down.right;
+                    above = above.right;
+                }
+            }
+            // at this point, we've shifted over the row above as well as hooked up the left node to the new one and the new node to the node right of the left node
+            // next, we need to shift the target row's down properties
+            if(deleting.right != null) {
+                this.ReplaceBackwards(deleting.right, deleting.down);
+            }
+            return deleting;
         }
 
         public Node<T> GetFirst(int row) {
@@ -266,19 +326,31 @@ namespace NodeMap {
             return first;
         }
 
-        public override string ToString() {
-            string returning = "";
+        private U ThroughEach<U>(U starting, Func<Node<T>, U> withEach, Func<U, U, U> combine, Func<U>? withEachRow = null) {
+            U returning = starting;
             Node<T>? leftmost = this.Head;
             while(leftmost != null) {
                 Node<T>? viewing = leftmost;
                 while(viewing != null) {
-                    returning += $"{viewing.val} ";
+                    returning = combine(returning, withEach(viewing));
                     viewing = viewing.right;
                 }
-                returning += "\n";
+                if(withEachRow != null) {
+                    returning = combine(returning, withEachRow());
+                }
                 leftmost = leftmost.down;
             }
             return returning;
+        }
+
+        public override string ToString() {
+            return this.ThroughEach<string>("", (Node<T> viewing) => $"{viewing.val} ", (string current, string adding) => current + adding, () => "\n");
+        }
+
+        public string DeepPrint() {
+            return this.ThroughEach<string>("", 
+                (Node<T> viewing) => $"{viewing.val}>{((viewing.right == null) ? "null" : viewing.right.val)}v{((viewing.down == null) ? "null" : viewing.down.val)} ", 
+            (string current, string adding) => current + adding, () => "\n");
         }
     }
 }
