@@ -1,5 +1,5 @@
 namespace NodeMap {
-    class NodeMap<T> where T : struct {
+    class NodeMap<T> {
         public Node<T>? Head { get; private set; }
         public NodeMap(Node<T>? head = null) {
             this.Head = head;
@@ -344,12 +344,12 @@ namespace NodeMap {
         }
 
         public override string ToString() {
-            return this.ThroughEach<string>("", (Node<T> viewing) => $"{viewing.val} ", (string current, string adding) => current + adding, () => "\n");
+            return this.ThroughEach<string>("", (Node<T> viewing) => $"{viewing.Val} ", (string current, string adding) => current + adding, () => "\n");
         }
 
         public string DeepPrint() {
             return this.ThroughEach<string>("", 
-                (Node<T> viewing) => $"{viewing.val}>{((viewing.right == null) ? "null" : viewing.right.val)}v{((viewing.down == null) ? "null" : viewing.down.val)} ", 
+                (Node<T> viewing) => $"{viewing.Val}>{((viewing.right == null) ? "null" : viewing.right.Val)}v{((viewing.down == null) ? "null" : viewing.down.Val)} ", 
             (string current, string adding) => current + adding, () => "\n");
         }
     }

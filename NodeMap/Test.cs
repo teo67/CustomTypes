@@ -1,10 +1,15 @@
 namespace NodeMap {
-    class Example : IExample {
+    class Test : ITest {
+        public string Name {
+            get {
+                return "NodeMap [push * 2, pop, push, add * 2, remove, insert, delete, print, deepprint]";
+            }
+        }
         public void Run() {
             NodeMap<int> myMap = new NodeMap<int>();
             myMap.Push(0);
             myMap.Push(1);
-            Console.WriteLine(myMap.Pop().val);
+            Console.WriteLine(myMap.Pop().Val);
             myMap.Push(2);
             myMap.Add(0, 2);
             myMap.Add(1, 3);
