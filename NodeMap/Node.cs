@@ -8,5 +8,8 @@ namespace NodeMap {
             this.right = right;
             this.down = down;
         }
+        public override string ToString() {
+            return $"Node / {Val}";
+        }
     }
 }

@@ -6,5 +6,8 @@ namespace NTree {
             this.Val = val;
             this.cxns = new Node<T>[cxnlength];
         }
+        public override string ToString() {
+            return $"Node / {Val}";
+        }
     }
 }
