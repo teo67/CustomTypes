@@ -2,37 +2,18 @@ namespace NTree {
     class Test : ITest {
         public string Name {
             get {
-                return "NTree [add vals, invert, print, print size]";
+                return "NTree [BinaryTree, add * 4, print, invert, print]";
             }
         }
         public void Run() {
-            NTree<int> myTree = new NTree<int>(5, (int viewing, int adding) => {
-                if(adding - viewing < -1) {
-                    return 0;
-                }
-                if(adding - viewing == -1) {
-                    return 1;
-                }
-                if(adding == viewing) {
-                    return 2;
-                }
-                if(adding - viewing == 1) {
-                    return 3;
-                }
-                return 4;
-            });
-
-            myTree.Add(4);
-            myTree.Add(2);
-            myTree.Add(3);
-            myTree.Add(4);
-            myTree.Add(5);
-            myTree.Add(6);
+            BinaryTree myTree = new BinaryTree(); // binary tree is an implementation of ntree (see file)
+            myTree.Add(0);
             myTree.Add(1);
-            myTree.Invert();
-
+            myTree.Add(-1);
+            myTree.Add(-2);
             Console.WriteLine(myTree);
-            Console.WriteLine(myTree.Size);
+            myTree.Invert();
+            Console.WriteLine(myTree);
         }
     }   
 }
